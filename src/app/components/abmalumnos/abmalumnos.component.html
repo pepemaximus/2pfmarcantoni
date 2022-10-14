@@ -1,1 +1,42 @@
-<p>abmalumnos works!</p>
+<!--se utilizó directiva para cambiar tamaño de letra a 20px en titulos-->
+<p><span appSize>Formulario de alta, baja y modificación de usuarios</span></p>
+
+<form [formGroup]="formularioAbm" (ngSubmit)="agregarAlumno()">
+    <div class="row">
+        <div class="col-6">
+            <label for="">Nombre:</label>
+                <input type="text" formControlName="nombre">
+            <p *ngIf="formularioAbm.get('nombre')?.touched && formularioAbm.get('nombre')?.errors?.['required']">El campo nombre es requerido</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <label for="">Apellido:</label>
+            <input type="text" formControlName="apellido">
+            <p *ngIf="formularioAbm.get('apellido')?.touched && formularioAbm.get('apellido')?.errors?.['required']">El campo apellido es requerido</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <label for="">Comisión:</label>
+            <input type="text" formControlName="comision">
+            <p *ngIf="formularioAbm.get('comision')?.touched && formularioAbm.get('comision')?.errors?.['required']">El campo comisión es requerido</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <label for="">Fecha de nacimiento:</label>
+            <input type="text" formControlName="fechaNacimiento">
+            <p *ngIf="formularioAbm.get('fechaNacimiento')?.touched && formularioAbm.get('fechaNacimiento')?.errors?.['required']">El campo fecha de nacimiento es requerido</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <label for="">Alumno frecuente:</label>
+            <input type="text" formControlName="alumnoFrecuente">
+            <p *ngIf="formularioAbm.get('alumnoFrecuente')?.touched && formularioAbm.get('alumnoFrecuente')?.errors?.['required']">El campo alumno frecuente es requerido</p>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="formularioAbm.invalid">Agregar usuario</button>
+</form>
+

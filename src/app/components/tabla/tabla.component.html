@@ -1,52 +1,73 @@
-<h1>Listado de alumnos</h1>
-<div class="row">
-    <mat-form-field col-md-6>
-        <mat-label>Filtrar por apellido</mat-label>
-        <input type="text" matInput (keyup)="filtrarApellido()">
-    </mat-form-field>
-    <mat-form-field col-md-6>
-        <mat-label>Filtrar por número de comisión</mat-label>
-        <input type="text" matInput (keyup)="filtrarComision()">
-    </mat-form-field>
+<!--se utilizó directiva para cambiar tamaño de letra a 20px en titulos y encabezados-->
+<div class="container row col-12">    
+    <mat-toolbar class="title-toolbar">
+        <mat-toolbar-row>
+            <span class="title-center"><span appSize>Tabla de listado de alumnos</span></span>
+        </mat-toolbar-row>
+    </mat-toolbar>
 </div>
-<div class = "row">
-    <table mat-table [dataSource]="dataSource" class="col-md-12">
-        <ng-container marColumnDef="nombre">
-            <th mat-header-cell *matHeaderCellDef>Nombre</th>
-            <td mat-cell *matCellDef="let basealumno">{{ basealumno.nombre}}</td>
-        </ng-container>
-        <ng-container marColumnDef="apellido">
-            <th mat-header-cell *matHeaderCellDef>Apellido</th>
-            <td mat-cell *matCellDef="let basealumno">{{ basealumno.apellido}}</td>
-        </ng-container>        
-        <ng-container marColumnDef="comision">
-            <th mat-header-cell *matHeaderCellDef>Comisión</th>
-            <td mat-cell *matCellDef="let basealumno">{{ basealumno.comision}}</td>
-        </ng-container>
-        <ng-container marColumnDef="fechaNacimiento">
-            <th mat-header-cell *matHeaderCellDef>Fecha de nacimiento</th>
-            <td mat-cell *matCellDef="let basealumno">{{ basealumno.fechaNacimiento}}</td>
-        </ng-container>
-        <ng-container marColumnDef="alumnoFrecuente">
-            <th mat-header-cell *matHeaderCellDef>¿Es alumno frecuente?</th>
-            <td mat-cell *matCellDef="let basealumno">{{ basealumno.alumnoFrecuente}}</td>
-        </ng-container>
-        <!--Acciones de editar o eliminar-->
-        <ng-container marColumnDef="acciones">
-            <th mat-header-cell *matHeaderCellDef>Seleccione acción a realizar</th>
-            <td mat-cell *matCellDef>
-                <button mat-icon-button>
-                    <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button>
-                    <mat-icon>delete</mat-icon>
-                </button>
-                <button mat-icon-button>
-                    <mat-icon>plus-box-outline</mat-icon>
-                </button>
-            </td>    
-        </ng-container>
-        <tr mat-header-row *mat-headerRowDef="columnas"></tr>
-        <tr mat-row *matRowDef="let row; columns: columnas"></tr>
-    </table>
+<div class="container row col-12">
+    <div class="container barraLateral row col-3">
+            <mat-sidenav-container>
+                <mat-sidenav>Start</mat-sidenav>
+                <mat-sidenav-content>Menú de opciones</mat-sidenav-content>
+                <span class="example-spacer"></span>
+                    <mat-icon class="example-icon" 
+                            aria-hidden="false" 
+                            aria-label="sidenav">assignment
+                    </mat-icon>
+                    <mat-icon
+                        class="example-icon"
+                        aria-hidden="false"
+                        aria-label="Ingresar">
+                        how_to_reg
+                    </mat-icon>
+            </mat-sidenav-container>
+    </div>
+    <div class = "container row col-9">
+        <mat-form-field>
+            <mat-label>Filtrar</mat-label>
+            <input type="text" matInput (keyup)="filtro($event)">
+        </mat-form-field>
+        <table mat-table [dataSource]="dataSource"> 
+            <!-- Nombre y apellido-->
+            <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef><span appSize>Nombre</span></th>
+                <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+            </ng-container>
+            <ng-container matColumnDef="apellido">
+                <th mat-header-cell *matHeaderCellDef><span appSize>Apellido</span></th>
+                <td mat-cell *matCellDef="let element">{{ element.apellido }}</td>
+            </ng-container>
+            <!-- Comisión del alumno -->
+            <ng-container matColumnDef="comision">
+                <th mat-header-cell *matHeaderCellDef><span appSize>Comisión</span></th>
+                <td mat-cell *matCellDef="let element">{{ element.comision }}</td>
+            </ng-container>
+            <!-- Fecha de nacimiento con uso de Pipe para formatear la fecha-->
+            <ng-container matColumnDef="fechaNacimiento">
+                <th mat-header-cell *matHeaderCellDef><span appSize>Fecha de nacimiento</span></th>
+                <td mat-cell *matCellDef="let element">{{ element.fechaNacimiento | date: 'shortDate' }}</td>
+            </ng-container>    
+            <!-- ¿Es alumno frecuente? con formato sí o no-->
+            <ng-container matColumnDef="alumnoFrecuente">
+                <th mat-header-cell *matHeaderCellDef><span appSize>¿Es alumno frecuente?</span></th>
+                <td mat-cell *matCellDef="let element">{{ element.alumnoFrecuente === true ? 'Sí' : 'No' }}</td>
+            </ng-container>
+                <!--Acciones de editar o eliminar-->
+            <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef><span appSize>Acciones</span></th>
+                <td mat-cell *matCellDef>
+                    <button mat-icon-button (click)="editar()">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button>
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+        </table>
+    </div>
 </div>
